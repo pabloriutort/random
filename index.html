@@ -14,12 +14,20 @@
 		var colours = ['white','red','lime','purple','blue','yellow','black','orange','pink'];
 		var randomColour = colours[Math.floor(Math.random()*colours.length)];
 		
-		//put favicon according to new color
+		//put favicon according to new colour
 		var link = document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = 'favicons/'+ randomColour + ".png";
-	  document.getElementsByTagName('head')[0].appendChild(link);
+		link.type = 'image/x-icon';
+		link.rel = 'shortcut icon';
+		link.href = 'favicons/'+ randomColour + ".png";
+		document.getElementsByTagName('head')[0].appendChild(link);
+
+		//capitalize colour name
+		var titleName = randomColour.charAt(0).toUpperCase() + randomColour.slice(1);
+
+		//change page title also to colour name
+		var title = document.createElement('title');
+		title.text = titleName;
+		document.getElementsByTagName('head')[0].appendChild(title);
 
 		//finally paint the body
 		var body = document.getElementsByTagName("BODY")[0];
