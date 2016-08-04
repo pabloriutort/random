@@ -2,6 +2,14 @@
 <html>
 <head>
 	<style>
+		h2 {
+			margin: auto;
+			color: black;
+			text-align: center;
+			font-size: 200px;
+			font-family: Terminal, sans-serif;
+		}
+		
 		footer {
 			position: absolute;
 			bottom: 0;
@@ -11,7 +19,7 @@
 		}
 	</style>
 </head>
-<body>
+<body onkeypress="return checkKey(event)">
 
 	<script>
 		//get random colour
@@ -37,7 +45,84 @@
 		var body = document.getElementsByTagName("BODY")[0];
 		body.style.backgroundColor = randomColour;
 		
+		//for random number
+		sessionStorage.clear();
+		document.getElementsByTagName('h2')[0].innerHTML = "";
+		
+		/**
+		 * Listens to document and gets which key was pressed
+		 * Inside we will find some functions to print the random number
+		 * @param  Event e event of possible key
+		 */
+		function checkKey(e){
+		    var keynum;
+
+		    if(window.event) { // IE                    
+		      keynum = e.keyCode;
+		    } else if(e.which){ // Netscape/Firefox/Opera                   
+		      keynum = e.which;
+		    }
+			
+		    var keypressed = parseInt(String.fromCharCode(keynum));
+			
+			//check if key was a number
+			if (!isNaN(keypressed)){
+				saveNumber(keypressed);
+			}
+			
+			//check if key code matches 'Enter' key
+			if(keynum == 13) {
+				//get all stored numbers
+			    var numbers = JSON.parse(sessionStorage.getItem('numbers'));
+				if (numbers){
+					printNumber(numbers);
+				}
+			}
+		  }
+		  
+		  /**
+		   * Gets a random number from sessionStorage
+		   * Uses JSON.parse to get saved array and JSON.stringify to save new array
+		   * @param  String number This is the pressed number
+		   */
+		  function saveNumber(number){
+			  var numbers = [];
+			  //if there where previous numbers on session, then get them and update
+			  if (sessionStorage.key('numbers')) numbers = JSON.parse(sessionStorage.getItem('numbers'));
+			  numbers.push(number);
+			  
+			  //save new array
+			  sessionStorage.setItem('numbers',JSON.stringify(numbers));
+		  }
+		  
+		  /**
+		   * Trasform given array into a single number, like this:
+		   * 
+		   * 					[1,2,3] = 123
+		   * 	
+		   * @param  Array number_array The stored pressed numbers
+		   */
+		  function printNumber(number_array){
+			  //first transform all numbers stored in array into a number
+			  var result = parseInt(number_array.toString().replace(/,/g, ''));
+			  
+			  //get random number from result
+			  var random_number = Math.floor((Math.random() * result) + 1);
+			  
+			  //put random number into h2 tag
+			  var h2 = document.getElementsByTagName('h2')[0];
+			  h2.innerText = random_number;
+			  
+			  //change h2 color to white if random colour was black
+			  if (randomColour == 'black') h2.style.color = "white";
+			  
+			  sessionStorage.clear();
+		  }
+		
 	</script>
+	<section>
+		<h2></h2>
+	</section>
 	<footer>
 		<h1>
 			<a href="https://github.com/pabloriutort/random-colour" target="_blank">
