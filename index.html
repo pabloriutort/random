@@ -22,63 +22,66 @@
 <body onkeypress="return checkKey(event)">
 
 	<script>
-		//get random colour
-		var colours = ['white','red','lawngreen','purple','blue','yellow','black','orange','deeppink'];
-		var randomColour = colours[Math.floor(Math.random()*colours.length)];
-		
-		//put favicon according to new colour
-		var link = document.createElement('link');
-		link.type = 'image/x-icon';
-		link.rel = 'shortcut icon';
-		link.href = 'favicons/'+ randomColour + ".png";
-		document.getElementsByTagName('head')[0].appendChild(link);
+			window.onload = function(){
+					//get random colour
+					var colours = ['white','red','lawngreen','purple','blue','yellow','black','orange','deeppink'];
+					randomColour = colours[Math.floor(Math.random()*colours.length)];
+					
+					//put favicon according to new colour
+					var link = document.createElement('link');
+					link.type = 'image/x-icon';
+					link.rel = 'shortcut icon';
+					link.href = 'favicons/'+ randomColour + ".png";
+					document.getElementsByTagName('head')[0].appendChild(link);
 
-		//capitalize colour name
-		var titleName = randomColour.charAt(0).toUpperCase() + randomColour.slice(1);
+					//capitalize colour name
+					var titleName = randomColour.charAt(0).toUpperCase() + randomColour.slice(1);
 
-		//change page title also to colour name
-		var title = document.createElement('title');
-		title.text = titleName;
-		document.getElementsByTagName('head')[0].appendChild(title);
+					//change page title also to colour name
+					var title = document.createElement('title');
+					title.text = titleName;
+					document.getElementsByTagName('head')[0].appendChild(title);
 
-		//finally paint the body
-		var body = document.getElementsByTagName("BODY")[0];
-		body.style.backgroundColor = randomColour;
-		
-		//for random number
-		sessionStorage.clear();
-		document.getElementsByTagName('h2')[0].innerHTML = "";
-		
-		/**
-		 * Listens to document and gets which key was pressed
-		 * Inside we will find some functions to print the random number
-		 * @param  Event e event of possible key
-		 */
-		function checkKey(e){
-		    var keynum;
-
-		    if(window.event) { // IE                    
-		      keynum = e.keyCode;
-		    } else if(e.which){ // Netscape/Firefox/Opera                   
-		      keynum = e.which;
-		    }
-			
-		    var keypressed = parseInt(String.fromCharCode(keynum));
-			
-			//check if key was a number
-			if (!isNaN(keypressed)){
-				saveNumber(keypressed);
+					//finally paint the body
+					var body = document.getElementsByTagName("BODY")[0];
+					body.style.backgroundColor = randomColour;
+					
+					//for random number
+					sessionStorage.clear();
+					h2 = body.getElementsByTagName('h2')[0];
+					h2.innerHTML = "";
 			}
-			
-			//check if key code matches 'Enter' key
-			if(keynum == 13) {
-				//get all stored numbers
-			    var numbers = JSON.parse(sessionStorage.getItem('numbers'));
-				if (numbers){
-					printNumber(numbers);
+		
+			/**
+			 * Listens to document and gets which key was pressed
+			 * Inside we will find some functions to print the random number
+			 * @param  Event e event of possible key
+			 */
+			function checkKey(e){
+					var keynum;
+
+					if(window.event) { // IE                    
+						keynum = e.keyCode;
+					} else if(e.which){ // Netscape/Firefox/Opera                   
+						keynum = e.which;
+					}
+				
+					var keypressed = parseInt(String.fromCharCode(keynum));
+				
+				//check if key was a number
+				if (!isNaN(keypressed)){
+					saveNumber(keypressed);
+				}
+				
+				//check if key code matches 'Enter' key
+				if(keynum == 13) {
+					//get all stored numbers
+						var numbers = JSON.parse(sessionStorage.getItem('numbers'));
+					if (numbers){
+						printNumber(numbers);
+					}
 				}
 			}
-		  }
 		  
 		  /**
 		   * Gets a random number from sessionStorage
