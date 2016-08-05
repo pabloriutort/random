@@ -48,8 +48,6 @@
 					
 					//for random number
 					sessionStorage.clear();
-					h2 = body.getElementsByTagName('h2')[0];
-					h2.innerHTML = "";
 			}
 		
 			/**
@@ -76,7 +74,7 @@
 				//check if key code matches 'Enter' key
 				if(keynum == 13) {
 					//get all stored numbers
-						var numbers = JSON.parse(sessionStorage.getItem('numbers'));
+					var numbers = JSON.parse(sessionStorage.getItem('numbers'));
 					if (numbers){
 						printNumber(numbers);
 					}
