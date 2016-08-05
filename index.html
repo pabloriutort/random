@@ -45,6 +45,12 @@
 					//finally paint the body
 					var body = document.getElementsByTagName("BODY")[0];
 					body.style.backgroundColor = randomColour;
+
+					//change logo if random is black
+					if (randomColour == "black"){
+						var img = document.getElementsByTagName("IMG")[0];
+						img.src = "GitHub-Mark-white-32px.png";
+					}
 					
 					//for random number
 					sessionStorage.clear();
