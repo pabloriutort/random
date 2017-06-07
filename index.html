@@ -95,11 +95,13 @@
 		  function saveNumber(number){
 			  var numbers = [];
 			  //if there where previous numbers on session, then get them and update
-			  if (sessionStorage.key('numbers')) numbers = JSON.parse(sessionStorage.getItem('numbers'));
+			  if (sessionStorage.key('numbers')) 
+				  numbers = JSON.parse(sessionStorage.getItem('numbers'));
 			  numbers.push(number);
 			  
-			  //save new array
-			  sessionStorage.setItem('numbers',JSON.stringify(numbers));
+			  //save new array if we do not pass the max
+			  if (numbers.length < 11)
+				sessionStorage.setItem('numbers',JSON.stringify(numbers));
 		  }
 		  
 		  /**
